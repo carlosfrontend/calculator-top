@@ -1,47 +1,31 @@
-const numbers = document.querySelectorAll('.number');
+const buttons = document.querySelectorAll('button');
 const placeholder = document.querySelector('.placeholder');
-const operators = document.querySelectorAll('.operator');
 const equalsButton = document.querySelector('.equal');
 const display = document.querySelector('.display-text');
 const clearButton = document.querySelector('.ac');
-// Create an add function
+const decimal = document.querySelector('.decimal');
+
 
 function add(a, b) {
   return a + b;
 }
 
-// Create a subtract function
 
 function subtract(a, b) {
   return a - b;
 }
 
-// Create a multiply function
-
 function multiply(a, b) {
   return a * b;
 }
-
-// Create a divide function
 
 function divide(a, b) {
   return a / b;
 }
 
-// Test all simple operations by console
-
-/* console.log('Add ' + add(5, 16))
-console.log('Subtract ' + subtract(10, 8))
-console.log('Multiply ' + multiply(4, 6))
-console.log('Divide ' + divide(24, 2)) */
-
-
-// Create a variable for the first number and initialize it to zero
-let firstNumber = 0;
-// Create a variable for operator and initialize it to void string ''
+let firstNumber = '';
 let operator = '';
-// Create a variable for the second number and initialize it to zero
-let secondNumber = 0;
+let secondNumber = '';
 let result = 0;
 
 // Create a function named operate that take a operator parameter and a num1 and num2 parameters and then call to one of the above functions in the numbers
@@ -66,66 +50,74 @@ function operate(operator, num1, num2) {
   }
 }
 
-// Create a variable named displayValue and initialize it to void string ''. This store the number that shows the in string format.
+let displayData = '';
 
-
-/* Create the functions that populate the display when you click the number buttons. You should be storing the ‘display value’ in a variable somewhere for use in the next step. */
-
-
-var displayValue = '';
-display.textContent = '0';
-
-function clearAll() {
-  displayValue = '';
-  firstNumber = 0;
-  operator = '';
-  secondNumber = 0;
-  placeholder.textContent = '';
-  display.textContent = '0';
+let showFirstOperand = (num) => {
+  displayData = num;
+  placeholder.textContent = displayData;
+  displayData = '';
 }
 
-function populateNumber(num) {
-  displayValue = num;
-  placeholder.textContent += displayValue;
-  displayValue = '';
-  return placeholder.textContent;
+let showOperator = (num1, operator) => {
+  placeholder.textContent = num1 + operator;
 }
 
-function getOperator(op) {
-  displayValue = op;
-  placeholder.textContent += displayValue;
-  displayValue = '';
-  return placeholder.textContent;
+let showSecondOperand = (num1, operator, num2) => {
+  placeholder.textContent = num1 + operator + num2;
 }
 
-function updateDisplay() {
+let showResult = (result) => {
   display.textContent = result;
 }
 
-if (firstNumber === 0 && operator === '' && secondNumber === 0) {
 
 
-  numbers.forEach(number => number.addEventListener('click', () => {
-    if (operator === '') {
-      firstNumber = populateNumber(number.textContent);
-    } else {
-      secondNumber = populateNumber(number.textContent).slice(firstNumber.length + 1);
-    }
-    console.log(`First: ${firstNumber} operator: ${operator} Second: ${secondNumber}`);
+buttons.forEach(button => button.addEventListener('click', () => {
+  let btn = button.textContent;
+  let temp = '';
+  if (operator === '' && btn !== 'AC' && btn !== 'C' && btn !== '=' && btn !== '+' && btn !== '-' && btn !== 'x' && btn !== '/') {
+    temp = btn;
+    firstNumber += temp;
+    console.log(+firstNumber);
+    temp = '';
+    showFirstOperand(firstNumber);
+  }
 
-  }));
+  if (operator === '' && btn === '+' || btn === '-' || btn === 'x' || btn === '/') {
+    temp = btn;
+    operator = temp;
+    console.log(operator);
+    temp = '';
+    showOperator(firstNumber, operator)
+  }
 
-  operators.forEach(ope => ope.addEventListener('click', () => {
-    operator = getOperator(ope.textContent).slice(firstNumber.length);
-  }));
+  if (operator !== '' && btn !== 'AC' && btn !== 'C' && btn !== '=' && btn !== '+' && btn !== '-' && btn !== 'x' && btn !== '/') {
+    temp = btn;
+    secondNumber += temp;
+    console.log(+secondNumber);
+    temp = '';
+    showSecondOperand(firstNumber, operator, secondNumber);
+  }
 
-  equalsButton.addEventListener('click', () => {
-    placeholder.textContent += '=';
-    result = operate(operator, +firstNumber, +secondNumber);
-    console.log('Result is: ' + result)
-    updateDisplay();
-  }, { once: true });
-}
+  if(btn == '='){
+    display.textContent = firstNumber;
+  }
+
+  if(firstNumber !== '' && operator !== '' && secondNumber !== '' && btn === '='){
+    temp = operate(operator, +firstNumber, +secondNumber);
+    firstNumber = temp;
+    result = firstNumber;
+    showResult(result);
+    firstNumber = result;
+    secondNumber = '';
+    showOperator(firstNumber, operator);
+    showSecondOperand(firstNumber, operator, secondNumber);
+  }  
+}));
 
 
-clearButton.addEventListener('click', clearAll);
+
+
+
+
+/* numbers.forEach(number => number.removeEventListener('click',_handleFirstOperand)); Works fine! */
