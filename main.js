@@ -67,6 +67,10 @@ buttons.forEach((button) =>
         placeholder.textContent += displayValue;
         decimal.disabled = false;
         break;
+      case "equal":
+        display.textContent =
+          "=" + operate(operator, +firstNumber, +secondNumber);
+        break;
       case "number":
         button.textContent === "."
           ? (button.disabled = true)
