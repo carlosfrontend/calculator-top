@@ -32,24 +32,37 @@ function divide(a, b) {
 function operate(operator, num1, num2) {
   switch (operator) {
     case "+":
-      return add(num1, num2);
+      return parseFloat(add(num1, num2));
       break;
     case "-":
-      return subtract(num1, num2);
+      return parseFloat(subtract(num1, num2));
       break;
     case "x":
-      return multiply(num1, num2);
+      return parseFloat(multiply(num1, num2));
       break;
     case "/":
-      return divide(num1, num2);
+      if (num2 === 0 && operator == "/") {
+        placeholder.textContent = "Error!";
+      }
+      return parseFloat(divide(num1, num2));
       break;
     default:
       // When user click on equal button (default value) return  the result of the firstNumber that can be the first number or the result.
+
       return firstNumber;
   }
 }
 
-let tempValue = "";
+let clearAll = () => {
+  firstNumber = "";
+  operator = "";
+  secondNumber = "";
+  displayValue = "";
+  placeholder.textContent = "";
+  decimal.disabled = false;
+  // Enable decimal when AC is clicked!
+  display.textContent = "=0";
+};
 
 display.textContent = "=0";
 
@@ -60,7 +73,11 @@ buttons.forEach((button) =>
       case "operator":
         if (firstNumber !== "" && secondNumber !== "") {
           // Assings the result of the operation to the firsNumber variable.
-          firstNumber = operate(operator, +firstNumber, +secondNumber);
+          firstNumber = operate(
+            operator,
+            +firstNumber,
+            +secondNumber
+          ).toPrecision(4);
           secondNumber = "";
           display.textContent = "=" + firstNumber;
         }
@@ -79,7 +96,7 @@ buttons.forEach((button) =>
         break;
       case "equal":
         display.textContent =
-          "=" + operate(operator, +firstNumber, +secondNumber);
+          "=" + +operate(operator, +firstNumber, +secondNumber).toPrecision(4);
         break;
       case "number":
         // Disable the decimal button if there are one decimal.
@@ -90,8 +107,11 @@ buttons.forEach((button) =>
           displayValue = button.textContent;
           firstNumber += displayValue;
           console.log(firstNumber);
-          placeholder.textContent += displayValue;
-          break;
+          if (placeholder.textContent.length > 12) {
+            clearAll();
+          } else {
+            placeholder.textContent += displayValue;
+          }
         }
       case "number":
         console.log(`secondNumber is ${secondNumber}`);
@@ -110,12 +130,8 @@ buttons.forEach((button) =>
 
       case "ac":
         if (button.textContent === "AC") {
-          firstNumber = "";
-          operator = "";
-          secondNumber = "";
-          displayValue = "";
-          placeholder.textContent = "";
-          display.textContent = "=0";
+          clearAll();
+          break;
         }
     }
   })
