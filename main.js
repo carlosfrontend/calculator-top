@@ -4,6 +4,7 @@ const equalsButton = document.querySelector(".equal");
 const display = document.querySelector(".display-text");
 const clearButton = document.querySelector(".ac");
 const decimal = document.querySelector("#decimal");
+const operatorButtons = document.querySelectorAll(".operator");
 
 let firstNumber = "";
 let operator = "";
@@ -43,6 +44,7 @@ function operate(operator, num1, num2) {
       return divide(num1, num2);
       break;
     default:
+      // When user click on equal button (default value) return  the result of the firstNumber that can be the first number or the result.
       return firstNumber;
   }
 }
@@ -57,6 +59,7 @@ buttons.forEach((button) =>
     switch (button.className) {
       case "operator":
         if (firstNumber !== "" && secondNumber !== "") {
+          // Assings the result of the operation to the firsNumber variable.
           firstNumber = operate(operator, +firstNumber, +secondNumber);
           secondNumber = "";
           display.textContent = "=" + firstNumber;
@@ -65,6 +68,13 @@ buttons.forEach((button) =>
         operator = displayValue;
         console.log(operator);
         placeholder.textContent += displayValue;
+        if (
+          placeholder.textContent[placeholder.textContent.length - 1] ===
+          operator
+        ) {
+          //Disable operator buttons.
+          operatorButtons.forEach((btn) => (btn.disabled = true));
+        }
         decimal.disabled = false;
         break;
       case "equal":
@@ -72,6 +82,7 @@ buttons.forEach((button) =>
           "=" + operate(operator, +firstNumber, +secondNumber);
         break;
       case "number":
+        // Disable the decimal button if there are one decimal.
         button.textContent === "."
           ? (button.disabled = true)
           : (button.disabled = false);
@@ -87,6 +98,8 @@ buttons.forEach((button) =>
         if (firstNumber !== "" && operator !== "") {
           displayValue = button.textContent;
           secondNumber += displayValue;
+          // Enable operator buttons.
+          operatorButtons.forEach((btn) => (btn.disabled = false));
           console.log(secondNumber);
           placeholder.textContent += displayValue;
           console.log(
