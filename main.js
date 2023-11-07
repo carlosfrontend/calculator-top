@@ -43,7 +43,7 @@ function operate(operator, num1, num2) {
       return divide(num1, num2);
       break;
     default:
-      return null;
+      return firstNumber;
   }
 }
 
@@ -59,7 +59,7 @@ buttons.forEach((button) =>
         if (firstNumber !== "" && secondNumber !== "") {
           firstNumber = operate(operator, +firstNumber, +secondNumber);
           secondNumber = "";
-          display.textContent = firstNumber;
+          display.textContent = "=" + firstNumber;
         }
         displayValue = button.textContent;
         operator = displayValue;
@@ -93,6 +93,16 @@ buttons.forEach((button) =>
             `First Number: ${+firstNumber} Operator: ${operator} Second Number: ${+secondNumber}`
           );
           break;
+        }
+
+      case "ac":
+        if (button.textContent === "AC") {
+          firstNumber = "";
+          operator = "";
+          secondNumber = "";
+          displayValue = "";
+          placeholder.textContent = "";
+          display.textContent = "=0";
         }
     }
   })
