@@ -41,9 +41,6 @@ function operate(operator, num1, num2) {
       return parseFloat(multiply(num1, num2));
       break;
     case "/":
-      if (num2 === 0 && operator == "/") {
-        placeholder.textContent = "Error!";
-      }
       return parseFloat(divide(num1, num2));
       break;
     default:
@@ -94,10 +91,6 @@ buttons.forEach((button) =>
         }
         decimal.disabled = false;
         break;
-      case "equal":
-        display.textContent =
-          "=" + +operate(operator, +firstNumber, +secondNumber).toPrecision(4);
-        break;
       case "number":
         // Disable the decimal button if there are one decimal.
         button.textContent === "."
@@ -106,15 +99,14 @@ buttons.forEach((button) =>
         if (operator === "") {
           displayValue = button.textContent;
           firstNumber += displayValue;
-          console.log(firstNumber);
           if (placeholder.textContent.length > 12) {
             clearAll();
           } else {
             placeholder.textContent += displayValue;
           }
+          break;
         }
       case "number":
-        console.log(`secondNumber is ${secondNumber}`);
         if (firstNumber !== "" && operator !== "") {
           displayValue = button.textContent;
           secondNumber += displayValue;
@@ -122,17 +114,35 @@ buttons.forEach((button) =>
           operatorButtons.forEach((btn) => (btn.disabled = false));
           console.log(secondNumber);
           placeholder.textContent += displayValue;
-          console.log(
-            `First Number: ${+firstNumber} Operator: ${operator} Second Number: ${+secondNumber}`
-          );
           break;
         }
 
+      case "equal":
+        if (firstNumber === "" || secondNumber === "") {
+          // Show error if some operand not exist
+          display.textContent = "Error!";
+          displayValue = "";
+          firstNumber = "";
+          secondNumber = "";
+          placeholder.textContent = displayValue;
+        } else {
+          display.textContent =
+            "=" +
+            +operate(operator, +firstNumber, +secondNumber).toPrecision(4);
+        }
+        break;
+
       case "ac":
         if (button.textContent === "AC") {
+          // Enable operators when AC is clicked
+          operatorButtons.forEach((btn) => (btn.disabled = false));
           clearAll();
           break;
         }
     }
+    result = operate(operator, +firstNumber, +secondNumber);
+    console.log(
+      `First Number: ${+firstNumber} Operator: ${operator} Second Number: ${+secondNumber} Result = ${result})`
+    );
   })
 );
