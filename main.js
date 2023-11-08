@@ -4,6 +4,7 @@ const equalsButton = document.querySelector(".equal");
 const display = document.querySelector(".display-text");
 const clearButton = document.querySelector(".ac");
 const decimal = document.querySelector("#decimal");
+const zero = document.querySelector("#zero");
 const operatorButtons = document.querySelectorAll(".operator");
 
 let firstNumber = "";
@@ -58,6 +59,7 @@ let clearAll = () => {
   decimal.disabled = false;
   // Enable decimal when AC is clicked!
   display.textContent = "=0";
+  zero.disabled = false;
 };
 
 display.textContent = "=0";
@@ -89,10 +91,14 @@ buttons.forEach((button) =>
         break;
       case "number":
         // Disable the decimal button if there are one decimal.
-
         button.textContent === "."
           ? (button.disabled = true)
           : (button.disabled = false);
+        if (button.textContent === "0" && firstNumber === "") {
+          zero.disabled = true;
+        } else {
+          zero.disabled = false;
+        }
         if (operator === "") {
           displayValue = button.textContent;
           firstNumber += displayValue;
@@ -115,6 +121,11 @@ buttons.forEach((button) =>
           secondNumber += displayValue;
           // Enable operator buttons.
           operatorButtons.forEach((btn) => (btn.disabled = false));
+          zero.disabled = false; // Enable zero for second operand
+          if (button.textContent === "0") {
+            placeholder.textContent += "";
+            zero.disabled = true;
+          }
           // If Only one symbol decimal is clicked display "0." for the second operand
           if (secondNumber === ".") {
             placeholder.textContent += "0";
