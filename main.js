@@ -133,9 +133,11 @@ buttons.forEach((button) =>
           secondNumber = "";
           placeholder.textContent = displayValue;
         } else {
-          display.textContent =
-            "=" +
-            +operate(operator, +firstNumber, +secondNumber).toPrecision(4);
+          // Assings the result of the operation to the firsNumber variable.
+          firstNumber = operate(operator, +firstNumber, +secondNumber);
+          secondNumber = "";
+          placeholder.textContent = firstNumber;
+          display.textContent = "=" + firstNumber;
         }
         break;
 
