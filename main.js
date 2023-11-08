@@ -2,7 +2,7 @@ const buttons = document.querySelectorAll("button");
 const placeholder = document.querySelector(".placeholder");
 const equalsButton = document.querySelector(".equal");
 const display = document.querySelector(".display-text");
-const clearButton = document.querySelector(".ac");
+const clearButton = document.querySelector(".clear");
 const decimal = document.querySelector("#decimal");
 const zero = document.querySelector("#zero");
 const operatorButtons = document.querySelectorAll(".operator");
@@ -139,9 +139,7 @@ buttons.forEach((button) =>
         if (firstNumber === "" || secondNumber === "") {
           // Show error if some operand not exist
           display.textContent = "Error!";
-          displayValue = "";
-          firstNumber = "";
-          secondNumber = "";
+          clearAll();
           placeholder.textContent = displayValue;
         } else {
           // Assings the result of the operation to the firsNumber variable.
@@ -166,3 +164,13 @@ buttons.forEach((button) =>
     );
   })
 );
+
+clearButton.addEventListener("click", () => {
+  placeholder.textContent = placeholder.textContent.slice(0, -1);
+  secondNumber = "";
+  if (placeholder.textContent === "") {
+    firstNumber = "";
+    clearAll();
+    display.textContent = "=0";
+  }
+});
