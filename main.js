@@ -45,7 +45,6 @@ function operate(operator, num1, num2) {
       break;
     default:
       // When user click on equal button (default value) return  the result of the firstNumber that can be the first number or the result.
-
       return firstNumber;
   }
 }
@@ -70,12 +69,9 @@ buttons.forEach((button) =>
       case "operator":
         if (firstNumber !== "" && secondNumber !== "") {
           // Assings the result of the operation to the firsNumber variable.
-          firstNumber = operate(
-            operator,
-            +firstNumber,
-            +secondNumber
-          ).toPrecision(4);
+          firstNumber = operate(operator, +firstNumber, +secondNumber);
           secondNumber = "";
+          placeholder.textContent = firstNumber;
           display.textContent = "=" + firstNumber;
         }
         displayValue = button.textContent;
@@ -93,12 +89,19 @@ buttons.forEach((button) =>
         break;
       case "number":
         // Disable the decimal button if there are one decimal.
+
         button.textContent === "."
           ? (button.disabled = true)
           : (button.disabled = false);
         if (operator === "") {
           displayValue = button.textContent;
           firstNumber += displayValue;
+
+          // If Only one symbol decimal is clicked display "0." for the first operand
+          if (firstNumber === ".") {
+            displayValue = "";
+            placeholder.textContent = displayValue + "0.";
+          }
           if (placeholder.textContent.length > 12) {
             clearAll();
           } else {
@@ -112,7 +115,11 @@ buttons.forEach((button) =>
           secondNumber += displayValue;
           // Enable operator buttons.
           operatorButtons.forEach((btn) => (btn.disabled = false));
-          console.log(secondNumber);
+          // If Only one symbol decimal is clicked display "0." for the second operand
+          if (secondNumber === ".") {
+            placeholder.textContent += "0";
+          }
+          // console.log(secondNumber);
           placeholder.textContent += displayValue;
           break;
         }
