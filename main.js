@@ -161,19 +161,16 @@ buttons.forEach((button) =>
           secondNumber = placeholder.textContent.slice(
             firstNumber.length + operator.length
           );
-          display.textContent =
-            "=" + operate(operator, +firstNumber, +secondNumber);
+          display.textContent = operate(operator, +firstNumber, +secondNumber);
         }
         if (firstNumber !== "" && operator !== "" && secondNumber === "") {
           operator = placeholder.textContent.slice(firstNumber.length);
-          display.textContent =
-            "=" + operate(operator, +firstNumber, +secondNumber);
+          display.textContent = operate(operator, +firstNumber, +secondNumber);
         }
         if (firstNumber !== "") {
           firstNumber = placeholder.textContent.slice(0, firstNumber.length);
           if (firstNumber === "") {
-            display.textContent =
-              "=" + operate(operator, +firstNumber, +secondNumber);
+            display.textContent = "=0";
           }
         }
     }
