@@ -76,7 +76,6 @@ buttons.forEach((button) =>
           placeholder.textContent = firstNumber;
           display.textContent = "=" + firstNumber;
         }
-        // displayValue = button.textContent;
         operator = button.textContent;
         console.log(operator);
         placeholder.textContent = firstNumber + operator;
