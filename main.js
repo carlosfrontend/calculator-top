@@ -102,6 +102,7 @@ buttons.forEach((button) =>
         if (operator === "") {
           displayValue = button.textContent;
           firstNumber += displayValue;
+          display.textContent = "=" + firstNumber;
 
           // If Only one symbol decimal is clicked display "0." for the first operand
           if (firstNumber === ".") {
@@ -119,6 +120,8 @@ buttons.forEach((button) =>
         if (firstNumber !== "" && operator !== "") {
           displayValue = button.textContent;
           secondNumber += displayValue;
+          display.textContent =
+            "=" + operate(operator, +firstNumber, +secondNumber);
           // Enable operator buttons.
           operatorButtons.forEach((btn) => (btn.disabled = false));
           zero.disabled = false; // Enable zero for second operand
@@ -139,8 +142,6 @@ buttons.forEach((button) =>
         if (firstNumber === "" || secondNumber === "") {
           // Show error if some operand not exist
           display.textContent = "Error!";
-          clearAll();
-          placeholder.textContent = displayValue;
         } else {
           // Assings the result of the operation to the firsNumber variable.
           firstNumber = operate(operator, +firstNumber, +secondNumber);
@@ -164,13 +165,3 @@ buttons.forEach((button) =>
     );
   })
 );
-
-clearButton.addEventListener("click", () => {
-  placeholder.textContent = placeholder.textContent.slice(0, -1);
-  secondNumber = "";
-  if (placeholder.textContent === "") {
-    firstNumber = "";
-    clearAll();
-    display.textContent = "=0";
-  }
-});
