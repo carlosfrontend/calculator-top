@@ -133,9 +133,15 @@ buttons.forEach((button) =>
         }
 
       case "equal":
-        if (firstNumber === "" || secondNumber === "") {
-          // Show error if some operand not exist
+        if (firstNumber === "" || secondNumber === "" || operator === "") {
+          // Show error if operand or operator not exist and disable all buttons except AC
           display.textContent = "Error!";
+          placeholder.textContent = "";
+          buttons.forEach((btn) => {
+            if (btn.className !== "ac") {
+              btn.disabled = true;
+            }
+          });
         } else {
           // Assings the result of the operation to the firsNumber variable.
           firstNumber = operate(operator, +firstNumber, +secondNumber);
@@ -148,6 +154,7 @@ buttons.forEach((button) =>
       case "ac":
         if (button.textContent === "AC") {
           clearAll();
+          buttons.forEach((btn) => (btn.disabled = false));
           break;
         }
     }
