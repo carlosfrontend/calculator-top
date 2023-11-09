@@ -77,7 +77,6 @@ buttons.forEach((button) =>
           display.textContent = "=" + firstNumber;
         }
         operator = button.textContent;
-        console.log(operator);
         placeholder.textContent = firstNumber + operator;
         if (
           placeholder.textContent[placeholder.textContent.length - 1] ===
@@ -127,7 +126,6 @@ buttons.forEach((button) =>
           if (secondNumber === ".") {
             placeholder.textContent += "0";
           }
-          // console.log(secondNumber);
           placeholder.textContent += displayValue;
           break;
         }
@@ -156,6 +154,27 @@ buttons.forEach((button) =>
           clearAll();
           buttons.forEach((btn) => (btn.disabled = false));
           break;
+        }
+      case "clear":
+        placeholder.textContent = placeholder.textContent.slice(0, -1);
+        if (firstNumber !== "" && operator !== "" && secondNumber !== "") {
+          secondNumber = placeholder.textContent.slice(
+            firstNumber.length + operator.length
+          );
+          display.textContent =
+            "=" + operate(operator, +firstNumber, +secondNumber);
+        }
+        if (firstNumber !== "" && operator !== "" && secondNumber === "") {
+          operator = placeholder.textContent.slice(firstNumber.length);
+          display.textContent =
+            "=" + operate(operator, +firstNumber, +secondNumber);
+        }
+        if (firstNumber !== "") {
+          firstNumber = placeholder.textContent.slice(0, firstNumber.length);
+          if (firstNumber === "") {
+            display.textContent =
+              "=" + operate(operator, +firstNumber, +secondNumber);
+          }
         }
     }
     result = operate(operator, +firstNumber, +secondNumber);
