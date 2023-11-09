@@ -76,16 +76,16 @@ buttons.forEach((button) =>
           placeholder.textContent = firstNumber;
           display.textContent = "=" + firstNumber;
         }
-        displayValue = button.textContent;
-        operator = displayValue;
+        // displayValue = button.textContent;
+        operator = button.textContent;
         console.log(operator);
-        placeholder.textContent += displayValue;
+        placeholder.textContent = firstNumber + operator;
         if (
           placeholder.textContent[placeholder.textContent.length - 1] ===
           operator
         ) {
           //Disable operator buttons.
-          operatorButtons.forEach((btn) => (btn.disabled = true));
+          // operatorButtons.forEach((btn) => (btn.disabled = true));
         }
         decimal.disabled = false;
         break;
