@@ -83,11 +83,8 @@ buttons.forEach((button) =>
         if (
           placeholder.textContent[placeholder.textContent.length - 1] ===
           operator
-        ) {
-          //Disable operator buttons.
-          // operatorButtons.forEach((btn) => (btn.disabled = true));
-        }
-        decimal.disabled = false;
+        )
+          decimal.disabled = false;
         break;
       case "number":
         // Disable the decimal button if there are one decimal.
@@ -122,8 +119,6 @@ buttons.forEach((button) =>
           secondNumber += displayValue;
           display.textContent =
             "=" + operate(operator, +firstNumber, +secondNumber);
-          // Enable operator buttons.
-          operatorButtons.forEach((btn) => (btn.disabled = false));
           zero.disabled = false; // Enable zero for second operand
           if (button.textContent === "0") {
             placeholder.textContent += "";
@@ -153,8 +148,6 @@ buttons.forEach((button) =>
 
       case "ac":
         if (button.textContent === "AC") {
-          // Enable operators when AC is clicked
-          operatorButtons.forEach((btn) => (btn.disabled = false));
           clearAll();
           break;
         }
