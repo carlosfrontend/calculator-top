@@ -1,11 +1,24 @@
 const buttons = document.querySelectorAll("button");
 const placeholder = document.querySelector(".placeholder");
-const equalsButton = document.querySelector(".equal");
 const display = document.querySelector(".display-text");
 const clearButton = document.querySelector(".clear");
+const acButton = document.querySelector(".ac");
 const decimal = document.querySelector("#decimal");
 const zero = document.querySelector("#zero");
-const operatorButtons = document.querySelectorAll(".operator");
+const addBtn = document.querySelector("#add");
+const subtractBtn = document.getElementById("subtract");
+const multiplyBtn = document.getElementById("multiply");
+const divideBtn = document.getElementById("divide");
+const oneBtn = document.getElementById("one");
+const twoBtn = document.getElementById("two");
+const threeBtn = document.querySelector("#three");
+const fourBtn = document.querySelector("#four");
+const fiveBtn = document.querySelector("#five");
+const sixBtn = document.querySelector("#six");
+const sevenBtn = document.querySelector("#seven");
+const eightBtn = document.querySelector("#eight");
+const nineBtn = document.querySelector("#nine");
+const equalBtn = document.querySelector(".equal");
 
 let firstNumber = "";
 let operator = "";
@@ -66,55 +79,64 @@ let clearAll = () => {
   zero.disabled = false;
 };
 
-/* document.addEventListener("keydown", function (event) {
+document.addEventListener("keydown", function (event) {
   event.preventDefault();
   if (event.key === "0") {
-    placeholder.textContent += event.key;
-  }
-  if (event.key === "1") {
-    placeholder.textContent += event.key;
-  }
-  if (event.key === "2") {
-    placeholder.textContent += event.key;
-  }
-  if (event.key === "3") {
-    placeholder.textContent += event.key;
-  }
-  if (event.key === "4") {
-    placeholder.textContent += event.key;
-  }
-  if (event.key === "5") {
-    placeholder.textContent += event.key;
-  }
-  if (event.key === "6") {
-    placeholder.textContent += event.key;
-  }
-  if (event.key === "7") {
-    placeholder.textContent += event.key;
-  }
-  if (event.key === "8") {
-    placeholder.textContent += event.key;
-  }
-  if (event.key === "9") {
-    placeholder.textContent += event.key;
+    zero.click();
   }
   if (event.key === ".") {
-    placeholder.textContent += event.key;
+    decimal.click();
   }
   if (event.key === "+") {
-    placeholder.textContent += event.key;
+    addBtn.click();
   }
+
   if (event.key === "-") {
-    placeholder.textContent += event.key;
+    subtractBtn.click();
   }
-  if (event.key === "x") {
-    placeholder.textContent += event.key;
+  if (event.key === "*") {
+    multiplyBtn.click();
   }
   if (event.key === "/") {
-    placeholder.textContent += event.key;
+    divideBtn.click();
+  }
+  if (event.key === "1") {
+    oneBtn.click();
+  }
+  if (event.key === "2") {
+    twoBtn.click();
+  }
+  if (event.key === "3") {
+    threeBtn.click();
+  }
+  if (event.key === "4") {
+    fourBtn.click();
+  }
+  if (event.key === "5") {
+    fiveBtn.click();
+  }
+  if (event.key === "6") {
+    sixBtn.click();
+  }
+  if (event.key === "7") {
+    sevenBtn.click();
+  }
+  if (event.key === "8") {
+    eightBtn.click();
+  }
+  if (event.key === "9") {
+    nineBtn.click();
+  }
+  if (event.key === "Delete") {
+    acButton.click();
+  }
+  if (event.key === "Backspace") {
+    clearButton.click();
+  }
+  if (event.key === "Enter") {
+    equalBtn.click();
   }
 });
- */
 buttons.forEach((button) =>
   button.addEventListener("click", () => {
     let displayValue = "";
