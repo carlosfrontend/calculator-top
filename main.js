@@ -62,7 +62,7 @@ let clearAll = () => {
   zero.disabled = false;
 };
 
-display.textContent = "=0";
+// display.textContent = "=0";
 
 buttons.forEach((button) =>
   button.addEventListener("click", () => {
@@ -158,6 +158,40 @@ buttons.forEach((button) =>
           break;
         }
       case "clear":
+        if (firstNumber !== "") {
+          placeholder.textContent = placeholder.textContent.slice(0, -1);
+          firstNumber = placeholder.textContent;
+          display.textContent = `=${operate(
+            operator,
+            +firstNumber,
+            +secondNumber
+          )}`;
+        }
+        if (firstNumber === "") {
+          firstNumber = "0";
+          display.textContent =
+            "=" + operate(operator, +firstNumber, +secondNumber);
+        }
+
+        if (secondNumber !== "") {
+          secondNumber = secondNumber.slice(0, -1);
+          firstNumber = placeholder.textContent.slice(
+            0,
+            placeholder.textContent.length -
+              secondNumber.length -
+              operator.length
+          );
+          display.textContent = `=${operate(
+            operator,
+            +firstNumber,
+            +secondNumber
+          )}`;
+        }
+
+        if (secondNumber === "") {
+          secondNumber = "";
+        }
+        break;
     }
     result = operate(operator, +firstNumber, +secondNumber);
     console.log(
