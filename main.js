@@ -56,8 +56,8 @@ let clearAll = () => {
   secondNumber = "";
   displayValue = "";
   placeholder.textContent = "";
-  decimal.disabled = false;
   // Enable decimal when AC is clicked!
+  decimal.disabled = false;
   display.textContent = "=0";
   zero.disabled = false;
 };
@@ -101,30 +101,32 @@ buttons.forEach((button) =>
 
           // If Only one symbol decimal is clicked display "0." for the first operand
           if (firstNumber === ".") {
-            displayValue = "";
-            placeholder.textContent = displayValue + "0.";
+            firstNumber = "0.";
+            placeholder.textContent += "0";
+            display.textContent = "=0.";
           }
-          if (placeholder.textContent.length > 12) {
-            clearAll();
-          } else {
-            placeholder.textContent += displayValue;
-          }
+          placeholder.textContent += displayValue;
           break;
         }
       case "number":
         if (firstNumber !== "" && operator !== "") {
+          button.textContent === "."
+            ? (button.disabled = true)
+            : (button.disabled = false);
+          if (button.textContent === "0" && secondNumber === "") {
+            zero.disabled = true;
+          } else {
+            zero.disabled = false;
+          }
           displayValue = button.textContent;
           secondNumber += displayValue;
           display.textContent =
             "=" + operate(operator, +firstNumber, +secondNumber);
-          zero.disabled = false; // Enable zero for second operand
-          if (button.textContent === "0") {
-            placeholder.textContent += "";
-            zero.disabled = true;
-          }
           // If Only one symbol decimal is clicked display "0." for the second operand
           if (secondNumber === ".") {
+            secondNumber = "0.";
             placeholder.textContent += "0";
+            display.textContent = "=0.";
           }
           placeholder.textContent += displayValue;
           break;
@@ -133,7 +135,7 @@ buttons.forEach((button) =>
       case "equal":
         if (firstNumber === "" || secondNumber === "" || operator === "") {
           // Show error if operand or operator not exist and disable all buttons except AC
-          display.textContent = "Error!";
+          // display.textContent = "Error!";
           placeholder.textContent = "";
           buttons.forEach((btn) => {
             if (btn.className !== "ac") {
@@ -156,23 +158,6 @@ buttons.forEach((button) =>
           break;
         }
       case "clear":
-        placeholder.textContent = placeholder.textContent.slice(0, -1);
-        if (firstNumber !== "" && operator !== "" && secondNumber !== "") {
-          secondNumber = placeholder.textContent.slice(
-            firstNumber.length + operator.length
-          );
-          display.textContent = operate(operator, +firstNumber, +secondNumber);
-        }
-        if (firstNumber !== "" && operator !== "" && secondNumber === "") {
-          operator = placeholder.textContent.slice(firstNumber.length);
-          display.textContent = operate(operator, +firstNumber, +secondNumber);
-        }
-        if (firstNumber !== "") {
-          firstNumber = placeholder.textContent.slice(0, firstNumber.length);
-          if (firstNumber === "") {
-            display.textContent = "=0";
-          }
-        }
     }
     result = operate(operator, +firstNumber, +secondNumber);
     console.log(
