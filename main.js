@@ -13,19 +13,19 @@ let secondNumber = "";
 let result = 0;
 
 function add(a, b) {
-  return a + b;
+  return (a + b).toFixed(2);
 }
 
 function subtract(a, b) {
-  return a - b;
+  return (a - b).toFixed(2);
 }
 
 function multiply(a, b) {
-  return a * b;
+  return (a * b).toFixed(2);
 }
 
 function divide(a, b) {
-  return a / b;
+  return (a / b).toFixed(2);
 }
 
 // Create a function named operate that take a operator parameter and a num1 and num2 parameters and then call to one of the above functions in the numbers
@@ -42,6 +42,11 @@ function operate(operator, num1, num2) {
       return parseFloat(multiply(num1, num2));
       break;
     case "/":
+      if (secondNumber === "0") {
+        display.textContent = "Ooops!";
+        firstNumber = "";
+        placeholder.textContent = firstNumber;
+      }
       return parseFloat(divide(num1, num2));
       break;
     default:
@@ -62,8 +67,6 @@ let clearAll = () => {
   zero.disabled = false;
 };
 
-// display.textContent = "=0";
-
 buttons.forEach((button) =>
   button.addEventListener("click", () => {
     let displayValue = "";
@@ -71,7 +74,9 @@ buttons.forEach((button) =>
       case "operator":
         if (firstNumber !== "" && secondNumber !== "") {
           // Assings the result of the operation to the firsNumber variable.
-          firstNumber = operate(operator, +firstNumber, +secondNumber);
+          firstNumber = operate(operator, +firstNumber, +secondNumber).toFixed(
+            2
+          );
           secondNumber = "";
           placeholder.textContent = firstNumber;
           display.textContent = "=" + firstNumber;
@@ -121,7 +126,7 @@ buttons.forEach((button) =>
           displayValue = button.textContent;
           secondNumber += displayValue;
           display.textContent =
-            "=" + operate(operator, +firstNumber, +secondNumber);
+            "=" + operate(operator, +firstNumber, +secondNumber).toFixed(2);
           // If Only one symbol decimal is clicked display "0." for the second operand
           if (secondNumber === ".") {
             secondNumber = "0.";
@@ -135,16 +140,15 @@ buttons.forEach((button) =>
       case "equal":
         if (firstNumber === "" || secondNumber === "" || operator === "") {
           // Show error if operand or operator not exist and disable all buttons except AC
-          // display.textContent = "Error!";
-          placeholder.textContent = "";
-          buttons.forEach((btn) => {
-            if (btn.className !== "ac") {
-              btn.disabled = true;
-            }
-          });
+          display.textContent = "Error!";
+          firstNumber = "";
+          operator = "";
+          secondNumber = "";
         } else {
           // Assings the result of the operation to the firsNumber variable.
-          firstNumber = operate(operator, +firstNumber, +secondNumber);
+          firstNumber = operate(operator, +firstNumber, +secondNumber).toFixed(
+            2
+          );
           secondNumber = "";
           placeholder.textContent = firstNumber;
           display.textContent = "=" + firstNumber;
