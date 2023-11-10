@@ -42,10 +42,9 @@ function operate(operator, num1, num2) {
       return parseFloat(multiply(num1, num2));
       break;
     case "/":
-      if (secondNumber === "0") {
-        display.textContent = "Ooops!";
+      if (secondNumber === "") {
+        // Reset firsNumber to void string if divide by zero
         firstNumber = "";
-        placeholder.textContent = firstNumber;
       }
       return parseFloat(divide(num1, num2));
       break;
@@ -67,6 +66,55 @@ let clearAll = () => {
   zero.disabled = false;
 };
 
+/* document.addEventListener("keydown", function (event) {
+  event.preventDefault();
+  if (event.key === "0") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "1") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "2") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "3") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "4") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "5") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "6") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "7") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "8") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "9") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === ".") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "+") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "-") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "x") {
+    placeholder.textContent += event.key;
+  }
+  if (event.key === "/") {
+    placeholder.textContent += event.key;
+  }
+});
+ */
 buttons.forEach((button) =>
   button.addEventListener("click", () => {
     let displayValue = "";
@@ -139,8 +187,9 @@ buttons.forEach((button) =>
 
       case "equal":
         if (firstNumber === "" || secondNumber === "" || operator === "") {
-          // Show error if operand or operator not exist and disable all buttons except AC
-          display.textContent = "Error!";
+          // Show error if operands or operator not exist and if user divide by zero
+          display.textContent = "Ooops!";
+          placeholder.textContent = "";
           firstNumber = "";
           operator = "";
           secondNumber = "";
