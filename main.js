@@ -55,10 +55,6 @@ function operate(operator, num1, num2) {
       return parseFloat(multiply(num1, num2));
       break;
     case "/":
-      if (secondNumber === "") {
-        // Reset firsNumber to void string if divide by zero
-        firstNumber = "";
-      }
       return parseFloat(divide(num1, num2));
       break;
     default:
@@ -77,6 +73,10 @@ let clearAll = () => {
   decimal.disabled = false;
   display.textContent = "=0";
   zero.disabled = false;
+};
+
+let handleMessage = () => {
+  display.textContent = "Don't divide by zero!!";
 };
 
 document.addEventListener("keydown", function (event) {
@@ -137,6 +137,7 @@ document.addEventListener("keydown", function (event) {
     equalBtn.click();
   }
 });
+display.textContent = "=0";
 buttons.forEach((button) =>
   button.addEventListener("click", () => {
     let displayValue = "";
@@ -173,7 +174,6 @@ buttons.forEach((button) =>
           displayValue = button.textContent;
           firstNumber += displayValue;
           display.textContent = "=" + firstNumber;
-
           // If Only one symbol decimal is clicked display "0." for the first operand
           if (firstNumber === ".") {
             firstNumber = "0.";
@@ -208,13 +208,13 @@ buttons.forEach((button) =>
         }
 
       case "equal":
-        if (firstNumber === "" || secondNumber === "" || operator === "") {
-          // Show error if operands or operator not exist and if user divide by zero
-          display.textContent = "Ooops!";
+        if (secondNumber === "0" && operator === "/") {
+          display.textContent = "Error";
+          setTimeout(handleMessage, 500);
           placeholder.textContent = "";
-          firstNumber = "";
-          operator = "";
-          secondNumber = "";
+          clearInterval(handleMessage);
+          setTimeout(clearAll, 1650);
+          clearInterval(clearAll);
         } else {
           // Assings the result of the operation to the firsNumber variable.
           firstNumber = operate(operator, +firstNumber, +secondNumber).toFixed(
@@ -268,9 +268,13 @@ buttons.forEach((button) =>
         }
         break;
     }
-    result = operate(operator, +firstNumber, +secondNumber);
-    console.log(
-      `First Number: ${+firstNumber} Operator: ${operator} Second Number: ${+secondNumber} Result = ${result})`
-    );
+    if (placeholder.textContent === Infinity + operator) {
+      display.textContent = "Error";
+      setTimeout(handleMessage, 500);
+      placeholder.textContent = "";
+      clearInterval(handleMessage);
+      setTimeout(clearAll, 1650);
+      clearInterval(clearAll);
+    }
   })
 );
