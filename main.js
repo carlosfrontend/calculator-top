@@ -144,9 +144,7 @@ buttons.forEach((button) =>
       case "operator":
         if (firstNumber !== "" && secondNumber !== "") {
           // Assings the result of the operation to the firsNumber variable.
-          firstNumber = operate(operator, +firstNumber, +secondNumber).toFixed(
-            2
-          );
+          firstNumber = operate(operator, +firstNumber, +secondNumber);
           secondNumber = "";
           placeholder.textContent = firstNumber;
           display.textContent = "=" + firstNumber;
@@ -195,7 +193,7 @@ buttons.forEach((button) =>
           displayValue = button.textContent;
           secondNumber += displayValue;
           display.textContent =
-            "=" + operate(operator, +firstNumber, +secondNumber).toFixed(2);
+            "=" + operate(operator, +firstNumber, +secondNumber);
           // If Only one symbol decimal is clicked display "0." for the second operand
           if (secondNumber === ".") {
             secondNumber = "0.";
@@ -207,7 +205,10 @@ buttons.forEach((button) =>
         }
 
       case "equal":
-        if (secondNumber === "0" && operator === "/") {
+        if (
+          secondNumber === "0" ||
+          (secondNumber === "0." && operator === "/")
+        ) {
           display.textContent = "Error";
           setTimeout(handleMessage, 500);
           placeholder.textContent = "";
@@ -216,9 +217,7 @@ buttons.forEach((button) =>
           clearInterval(clearAll);
         } else {
           // Assings the result of the operation to the firsNumber variable.
-          firstNumber = operate(operator, +firstNumber, +secondNumber).toFixed(
-            2
-          );
+          firstNumber = operate(operator, +firstNumber, +secondNumber);
           secondNumber = "";
           placeholder.textContent = firstNumber;
           display.textContent = "=" + firstNumber;
@@ -242,7 +241,7 @@ buttons.forEach((button) =>
           )}`;
         }
         if (firstNumber === "") {
-          firstNumber = "0";
+          firstNumber = "";
           display.textContent =
             "=" + operate(operator, +firstNumber, +secondNumber);
         }
@@ -264,6 +263,21 @@ buttons.forEach((button) =>
 
         if (secondNumber === "") {
           secondNumber = "";
+        }
+        if (operator === "/" && secondNumber === "") {
+          operator = operator.slice(0, -1);
+          decimal.disabled = false;
+          display.textContent = firstNumber;
+          if (firstNumber === NaN) {
+            secondNumber = "";
+            placeholder.textContent = "";
+            display.textContent = "=0";
+          }
+        }
+        if (firstNumber === "" && operator === "" && secondNumber === "") {
+          placeholder.textContent = "";
+          display.textContent = "=0";
+          decimal.disabled = false;
         }
         break;
     }
