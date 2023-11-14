@@ -279,6 +279,12 @@ buttons.forEach((button) =>
           display.textContent = "=0";
           decimal.disabled = false;
         }
+        if (
+          parseInt(secondNumber) === 0 &&
+          display.textContent === "=Infinity"
+        ) {
+          display.textContent = "Errrrrrr";
+        }
         break;
     }
     if (placeholder.textContent === Infinity + operator) {
